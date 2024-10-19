@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Definition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50; /* Darker shade for the title */
+            margin-bottom: 20px;
+        }
+
+        #definition {
+            background-color: #fff; /* White background for definition */
+            border: 2px solid #2980b9; /* Border color */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em; /* Larger font size for the definition */
+            color: #34495e; /* Text color */
+            width: 80%;
+            max-width: 600px; /* Limit the width */
+            transition: background-color 0.3s; /* Smooth background transition */
+        }
+
+        #definition:hover {
+            background-color: #ecf0f1; /* Light grey on hover */
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #2980b9; /* Button color */
+            border: none;
+            border-radius: 5px; /* Rounded button */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Smooth color transition */
+        }
+
+        button:hover {
+            background-color: #1c669c; /* Darker shade on hover */
+        }
+    </style>
+    <script>
+        async function fetchDefinition() {
+            try {
+                const response = await fetch('https://your_api.execute-api.us-east-1.amazonaws.com/Prod/quote', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+
+                const data = await response.json();
+                const body = JSON.parse(data.body);
+                const definition = body.definition;
+
+                document.getElementById('definition').innerText = definition;
+            } catch (error) {
+                console.error('Error fetching the definition:', error);
+                document.getElementById('definition').innerText = 'Failed to fetch definition.';
+            }
+        }
+
+        window.onload = fetchDefinition; // Call the function when the page loads
+    </script>
+</head>
+<body>
+    <h1>Random Cloud Definition</h1>
+    <div id="definition">Loading...</div>
+    <button onclick="fetchDefinition()">Get Another Definition</button>
+</body>
+</html>
