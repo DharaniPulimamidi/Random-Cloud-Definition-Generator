@@ -7,7 +7,7 @@ from boto3.dynamodb.conditions import Key
 dynamodb = boto3.resource('dynamodb')
 
 # Name of your DynamoDB table
-table_name = 'CloudDefinitionsTable'
+table_name = 'CloudDefinitions'
 table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
